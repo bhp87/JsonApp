@@ -16,9 +16,7 @@ public class JsonAppConfig {
 
     @Bean
     public Map<String, String> urlsMap() {
-        Map<String, String> urlMap = new HashMap<>();
-        urlMap = simpleMap;
-        return urlMap;
+        return new HashMap<>(simpleMap);
     }
 
     @Bean
