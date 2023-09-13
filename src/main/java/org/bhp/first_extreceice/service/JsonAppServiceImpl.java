@@ -18,7 +18,6 @@ public class JsonAppServiceImpl implements IJsonAppService {
 
     @Override
     public String getPosts(String postSource) {
-
         String url = urlMap.getOrDefault(postSource, urlMap.get("dummy"));
 
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);

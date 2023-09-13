@@ -11,17 +11,13 @@ import java.util.Map;
 @Configuration
 public class JsonAppConfig {
 
-    @Value("${jsonplaceholder.url:https://jsonplaceholder.typicode.com/posts}")
-    private String jsonPlaceholderUrl;
-
-    @Value("${dummy.url:https://dummyjson.com/posts}")
-    private String dummyUrl;
+    @Value("#{${simple.map}}")
+    Map<String, String> simpleMap;
 
     @Bean
     public Map<String, String> urlsMap() {
         Map<String, String> urlMap = new HashMap<>();
-        urlMap.put("dummy", dummyUrl);
-        urlMap.put("placeholder", jsonPlaceholderUrl);
+        urlMap = simpleMap;
         return urlMap;
     }
 
