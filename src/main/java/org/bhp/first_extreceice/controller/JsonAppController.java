@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/get_posts/")
+@RequestMapping("api/v1/")
 public class JsonAppController {
 
     IJsonAppService iJsonAppService;
@@ -18,9 +18,13 @@ public class JsonAppController {
         this.iJsonAppService = iJsonAppService;
     }
 
-    @GetMapping("{postSource}")
+    @GetMapping("posts/{postSource}")
     public String getPosts(@PathVariable String postSource) {
         return iJsonAppService.getPosts(postSource);
     }
 
+    @GetMapping("comments/{commentSource}")
+    public String getComments(@PathVariable String commentSource) {
+        return iJsonAppService.getComments(commentSource);
+    }
 }

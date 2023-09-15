@@ -1,28 +1,29 @@
 package org.bhp.first_extreceice.service;
 
-import org.springframework.http.ResponseEntity;
+import org.bhp.first_extreceice.client.ExternalApiClient;
+import org.bhp.first_extreceice.client.IExternalApiClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
 
 @Service
 public class JsonAppServiceImpl implements IJsonAppService {
-    private final Map<String, String> urlMap;
-    private final RestTemplate restTemplate;
 
-    public JsonAppServiceImpl(Map<String, String> urlMap, RestTemplate restTemplate) {
-        this.urlMap = urlMap;
-        this.restTemplate = restTemplate;
+    private final IExternalApiClient iExternalApiClient;
+
+    @Autowired
+    public JsonAppServiceImpl(ExternalApiClient externalApiClient) {
+        this.iExternalApiClient = externalApiClient;
     }
 
     @Override
     public String getPosts(String postSource) {
-        String url = urlMap.getOrDefault(postSource, urlMap.get("dummy"));
 
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        return iExternalApiClient.callToPostApi(postSource);
+    }
 
-        return responseEntity.getBody();
+    @Override
+    public String getComments(String commentSource) {
 
+        return iExternalApiClient.callToCommentApi(commentSource);
     }
 }
