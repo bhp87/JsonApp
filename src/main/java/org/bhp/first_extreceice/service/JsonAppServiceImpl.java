@@ -1,34 +1,29 @@
 package org.bhp.first_extreceice.service;
 
-import jdk.jshell.spi.ExecutionControl;
-import org.bhp.first_extreceice.client.factory.IExternalClientFactory;
-import org.bhp.first_extreceice.dto.BaseJsonDto;
+import org.bhp.first_extreceice.client.ExternalApiClient;
+import org.bhp.first_extreceice.client.IExternalApiClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class JsonAppServiceImpl implements IJsonAppService {
 
-    private final IExternalClientFactory iExternalClientFactory;
+    private final IExternalApiClient iExternalApiClient;
 
-    public JsonAppServiceImpl(IExternalClientFactory iExternalApiClient) {
-        this.iExternalClientFactory = iExternalApiClient;
+    @Autowired
+    public JsonAppServiceImpl(ExternalApiClient externalApiClient) {
+        this.iExternalApiClient = externalApiClient;
     }
 
-
     @Override
-    public List<?> getPosts(String postSource) throws ExecutionControl.NotImplementedException {
+    public String getPosts(String postSource) {
 
-        // use factory here
-        //
-        return iExternalClientFactory.createInstance(postSource).callToPostApi(postSource);
+        return iExternalApiClient.callToPostApi(postSource);
     }
 
     @Override
     public String getComments(String commentSource) {
 
-//        return iExternalClientFactory.callToCommentApi(commentSource);
-        return null;
+        return iExternalApiClient.callToCommentApi(commentSource);
     }
 }
